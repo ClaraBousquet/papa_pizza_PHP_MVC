@@ -179,9 +179,9 @@ class AuthController extends Controller
     }
 
     //méthode qui vérifie si l'utilisateur est un admin
-    public static function isAdmin(int $id): bool
+    public static function isAdmin(): bool
     {
-        $user = AppRepoManager::getRm()->getUserRepository(User::class)->findUserById($id);
-        return $user->is_admin;
-    }
+        return Session::get(Session::USER)->is_admin;
+
+    }    
 }

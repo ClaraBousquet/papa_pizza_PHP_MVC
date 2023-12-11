@@ -13,4 +13,10 @@ class UserController extends Controller
 
         $view->render();
     }
+
+    public function admin()
+    {
+        $view = new View('user/admin');
+        $view->render();
+    }
 }
