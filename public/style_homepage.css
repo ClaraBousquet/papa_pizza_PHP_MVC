@@ -52,7 +52,7 @@ body {
 
 }
 
-.button-fixe{
+.button-fixe {
     display: block;
     position: fixed;
     bottom: 0px;
@@ -62,8 +62,8 @@ body {
     font-size: 40px;
 }
 
-.button-fixe:hover{
-    color: rgba(255,71,78,1);    
+.button-fixe:hover {
+    color: rgba(255, 71, 78, 1);
 }
 
 
@@ -71,10 +71,15 @@ body {
 /* ici on code la vue mobile */
 /* 1er media query <480px */
 
-
+header{
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
 #topbar {
     display: flex;
     flex-direction: column;
+   
 }
 
 .line1 {

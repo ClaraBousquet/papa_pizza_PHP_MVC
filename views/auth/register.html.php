@@ -1,4 +1,4 @@
-<?php //if ($auth::isAuth()) $auth::redirect('/') 
+<?php if ($auth::isAuth()) $auth::redirect('/') 
 ?>
 <main class="container-form">
     <h1 class="title">Je crée mon compte</h1>
@@ -10,7 +10,7 @@
     <?php endif ?>
 
 
-    <form class="auth-form" action="/login" method="POST">
+    <form class="auth-form" action="/register" method="POST">
         <div class="box-auth-input">
             <label class="detail-description">Adresse email</label>
             <input type="email" class="form-control" name="email">

@@ -1,4 +1,4 @@
-<?php //if ($auth::isAuth()) $auth::redirect('/') ?>
+<?php if ($auth::isAuth()) $auth::redirect('/') ?>
         <main class="container-form">
             <h1 class="title">Me connecter</h1>
             <!-- on va afficher les erreurs s'il y en a -->

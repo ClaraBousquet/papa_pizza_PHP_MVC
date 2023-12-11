@@ -1,3 +1,11 @@
+<?php
+
+use Core\Session\Session;
+
+if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -23,57 +31,75 @@
 
     use App\AppRepoManager;
 
-    //if (!$auth::isAuth()) $auth::redirect('/connexion') 
+    if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
     ?>
     <div id="container">
 
-    <header>
-<!-- Top bar -->
-<div id="topbar">
-    <div class="line1">
-        <div class="box-phone">
-            <i class="bi bi-telephone">04 68 89 65 22</i></div>
-        <div class="box-social">
-            <a href=""><img class="social-icons"  src="/assets/images/icon/facebook-fill.svg" alt="icone facebook"></a>
-            <a href=""><img class="social-icons" src="/assets/images/icon/instagram.svg" alt="icone instagram"></a>
-            <a href=""><img class="social-icons" src="/assets/images/icon/twitter.svg" alt="icone twitter"></a>
-        </div>
-    </div>
-    <div class="line2">
-        <div class="nav-logo">
-            <a href="/">
-                <img class="logo-papapizza" src="/assets/images/homepage/papapizza.svg" alt="logo papapizza">
-            </a>
-        </div>
-        <div class="nav-list">
-            <nav class="custom-nav">
-                <ul class="custom-ul">
-                    <li class="custom-link"><a href="/">Accueil</a></li>
-                    <li  class="custom-link"><a href="/pizzas">Carte</a></li>
-                    <li class="custom-link"><a href="#">Actualités</a></li>
-                    <li class="custom-link"><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="nav-profil">
-        <nav class="custom-nav">
-                <ul class="custom-ul-profil">
-                    <li class="custom-link-profil"><a href="/connexion">Se connecter
-                        <img src="/assets/images/icon/user.svg" alt="icone utilisateur">
-                    </a></li>
-                    <li  class="custom-link-profil end-link">
-                        <a href="#">
-                            <img src="/assets/images/icon/cart.svg" alt="icone panier">
-                    </a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+        <header>
+            <!-- Top bar -->
+            <div id="topbar">
+                <div class="line1">
+                    <div class="box-phone">
+                        <i class="bi bi-telephone">04 68 89 65 22</i>
+                    </div>
+                    <div class="box-social">
+                        <a href=""><img class="social-icons" src="/assets/images/icon/facebook-fill.svg" alt="icone facebook"></a>
+                        <a href=""><img class="social-icons" src="/assets/images/icon/instagram.svg" alt="icone instagram"></a>
+                        <a href=""><img class="social-icons" src="/assets/images/icon/twitter.svg" alt="icone twitter"></a>
+                    </div>
+                </div>
+                <div class="line2">
+                    <div class="nav-logo">
+                        <a href="/">
+                            <img class="logo-papapizza" src="/assets/images/homepage/papapizza.svg" alt="logo papapizza">
+                        </a>
+                    </div>
+                    <div class="nav-list">
+                        <nav class="custom-nav">
+                            <ul class="custom-ul">
+                                <li class="custom-link"><a href="/">Accueil</a></li>
+                                <li class="custom-link"><a href="/pizzas">Carte</a></li>
+                                <li class="custom-link"><a href="#">Actualités</a></li>
+                                <li class="custom-link"><a href="#">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="nav-profil">
+                        <nav class="custom-nav">
+                            <ul class="custom-ul-profil">
+                                <li class="custom-link-profil">
+                                    <!--Si je suis en session on affiche mon compte  -->
+                                    <?php if ($auth::isAuth()) : ?>
 
-</div>
+                                        <a href="/account/<?= $user_id ?>">Mon compte
+                                            <img src="/assets/images/icon/user.svg" alt="icone utilisateur">
+                                        </a>
+                                    <?php else : ?>
+                                        <a href="/connexion">Se connecter
+                                            <img src="/assets/images/icon/user.svg" alt="icone utilisateur">
+                                        </a>
+                                    <?php endif ?>
+                                </li>
+                                <li class="custom-link-profil end-link">
+                                    <?php if ($auth::isAuth() && $auth::isAdmin($user_id)) : ?>
+                                        <a href="/admin/home">
+                                            <img src="/assets/images/icon/admin.svg" alt="icone back office">
+                                        </a>
+                                    <?php else : ?>
+                                        <a href="#">
+                                            <img src="/assets/images/icon/cart.svg" alt="icone panier">
+                                        </a>
+                                    <?php endif ?>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
 
 
 
-<!-- Navbar -->
+            <!-- Navbar -->
 
-</header>
+        </header>

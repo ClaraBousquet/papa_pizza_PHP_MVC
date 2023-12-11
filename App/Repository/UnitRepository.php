@@ -10,4 +10,6 @@ class UnitRepository extends Repository
     {
         return 'unit';
     }
+
+    //méthode qui ajoute un nouvel utilisateur
 }
