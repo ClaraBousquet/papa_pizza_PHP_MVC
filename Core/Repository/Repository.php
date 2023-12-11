@@ -35,6 +35,9 @@ abstract class Repository
         return $array_result;
     }
 
+    //méthode qui permet de récupérer les éléments de la table user
+    
+
     //méthode qui récupère les infos par son id
     public function readById(string $class_name, int $id)
     {

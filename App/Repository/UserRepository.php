@@ -67,4 +67,9 @@ class UserRepository extends Repository
     {
         return $this->readById(User::class, $id);
     }
+
+    public function getAllUser()
+    {
+        
+    }
 }

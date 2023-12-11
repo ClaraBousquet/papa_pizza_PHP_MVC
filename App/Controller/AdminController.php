@@ -10,12 +10,14 @@ class AdminController extends Controller
 {
     public function home()
     {
+        //on vérifie que l'utilisateur est connecté
 
         //on vérifie que l'utilisateur est un admin
-        if (!AuthController::isAdmin()) self::redirect('/');
+        if (!AuthController::isAuth() || !AuthController::isAdmin()) self::redirect('/');
 
         $view = new View('admin/home');
 
         $view->render();
     }
+
 }
