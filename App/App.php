@@ -78,6 +78,15 @@ class App implements DatabaseConfigInterface
         /* PARTIE BACK OFFICE */
         //route pour afficher l'interface administrateur
         $this->router->get('/admin/home', [AdminController::class, 'home']);
+        $this->router->get('/admin/user/list', [AdminController::class, 'listUser']);
+        $this->router->get('/admin/team/list', [AdminController::class, 'listTeam']);
+        $this->router->get('/admin/pizza/list', [AdminController::class, 'listPizza']);
+        $this->router->get('/admin/order/list', [AdminController::class, 'listOrder']);
+
+        //route pour "supprimer" un utilisateur
+        $this->router->get('/admin/user/delete/{id}', [AdminController::class, 'deleteUser']);
+
+
     }
 
     //3: méthode qui va démarrer le router

@@ -27,6 +27,55 @@
     font-weight: 700;
 }
 
+/* BACK OFFICE */
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-admin {
+    width: 80%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-admin-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.box-admin-link {
+    margin: 0 10px;
+}
+
+.table-user {
+    width: 80%;
+    margin-top: 30px;
+}
+
+
+.button-delete {
+    background-color: rgba(155, 49, 49, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.button-delete:hover {
+    background-color: rgba(225, 71, 78, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+
 @media screen and (min-width: 768px) {
     .auth-form {
         width: 60%;

@@ -1,0 +1,1 @@
+<h1 class="title">Liste des pizzas</h1>
