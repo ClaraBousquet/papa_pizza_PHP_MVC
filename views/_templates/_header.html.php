@@ -80,10 +80,11 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                         </a>
                                     <?php endif ?>
                                 </li>
+
                                 <li class="custom-link-profil end-link">
                                     <?php if ($auth::isAuth() && $auth::isAdmin()) : ?>
-                                        <a href="/admin/home">
-                                            <img src="/assets/images/icon/admin.svg" alt="icone back office">
+                                        <a  href="/admin/home">
+                                            <img class="custom-svg" src="/assets/images/icon/admin.svg" alt="icone back office">
                                         </a>
                                     <?php else : ?>
                                         <a href="#">
@@ -91,6 +92,13 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                         </a>
                                     <?php endif ?>
                                 </li>
+                                <?php if ($auth::isAuth()) :  ?>
+                                    <li class="custom-link-profil end-link">
+                                        <a  href="/logout">
+                                            <img class="logout custom-svg" src="/assets/images/icon/logout.svg" alt="icone logout">
+                                        </a>
+                                    </li>
+                                <?php endif ?>
                             </ul>
                         </nav>
                     </div>

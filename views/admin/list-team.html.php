@@ -3,6 +3,10 @@
 use Core\Session\Session; ?>
 <div class="admin-container">
     <h1 class="title">L'équipe</h1>
+<!-- boutton pour ajouter un nouveau membre -->
+<di class="admin-box-add"> 
+    <a class="call-action btn btn-primary" href="/admin/team/add">Ajouter un membre</a>
+</di>
     <?php if ($form_result && $form_result->hasErrors()) : ?>
         <div class="alert alert-danger" role="alert">
             <?php echo $form_result->getErrors()[0]->getMessage() ?>
@@ -34,7 +38,7 @@ use Core\Session\Session; ?>
                         <?php else : ?>
                             <span class="badge text-bg-success">Connecté</span>
                         <?php endif ?>
-
+                        
                     </td>
                 </tr>
             <?php endforeach ?>

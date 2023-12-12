@@ -27,12 +27,23 @@
     font-weight: 700;
 }
 
+.logout {
+    font-size: 40px;
+}
+
+.custom-svg{
+    width: 20px;
+    height: 20px;
+
+}
+
 /* BACK OFFICE */
 .admin-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 
 .box-admin {
     width: 80%;

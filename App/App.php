@@ -72,6 +72,8 @@ class App implements DatabaseConfigInterface
         $this->router->get('/inscription', [AuthController::class, 'registerForm']);
         //route qui receptionne les données du formulaire d'inscription
         $this->router->post('/register', [AuthController::class, 'register']);
+        //route pour se deconnecter
+        $this->router->get('/logout', [AuthController::class, 'logout']);
         //route pour accéder au compte de l'utilisateur
         $this->router->get('/account/{id}', [UserController::class, 'account']);
 
@@ -85,6 +87,10 @@ class App implements DatabaseConfigInterface
 
         //route pour "supprimer" un utilisateur
         $this->router->get('/admin/user/delete/{id}', [AdminController::class, 'deleteUser']);
+        //route pour ajouter un membre de l'&quipe
+        $this->router->get('/admin/team/add', [AdminController::class, 'addTeam']);
+        //route qui recevra les formulaires d'ajout d'un membre de l'équipe
+        $this->router->post('/register-team', [AuthController::class, 'registerTeam']);
 
 
     }

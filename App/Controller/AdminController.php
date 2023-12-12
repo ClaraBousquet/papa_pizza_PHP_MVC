@@ -9,6 +9,7 @@ use Core\Form\FormResult;
 use Core\Session\Session;
 use Core\Controller\Controller;
 use App\Controller\AuthController;
+use Laminas\Diactoros\ServerRequest;
 
 class AdminController extends Controller
 {
@@ -43,14 +44,14 @@ class AdminController extends Controller
     {
         //on vérifie que l'utilisateur est connecté et qu'il est admin
         if (!AuthController::isAuth() || !AuthController::isAdmin()) self::redirect('/');
-        
+
         $data_view = [
             'users' => AppRepoManager::getRm()->getUserRepository()->getAllTeamActif(),
             'form_result' => Session::get(Session::FORM_RESULT)
         ];
 
         $view = new View('admin/list-team');
-        
+
         $view->render($data_view);
     }
 
@@ -74,6 +75,9 @@ class AdminController extends Controller
     //méthode pour désactiver un client
     public function deleteUser(int $id)
     {
+        //on vérifie que l'utilisateur est connecté et qu'il est admin
+        if (!AuthController::isAuth() || !AuthController::isAdmin()) self::redirect('/');
+
         $form_result = new FormResult();
         //on appelle la méthode qui désactive un utilisateur
         $deleteUser = AppRepoManager::getRm()->getUserRepository()->deleteUser($id);
@@ -89,4 +93,20 @@ class AdminController extends Controller
         //si tout est ok  on redirige vers la liste des clients
         self::redirect('/admin/user/list');
     }
+
+    //méthode qui retourne le formulaire d'un membre d'ajout d'un membre de l'équipe
+    public function addTeam()
+    {
+        $view = new View('admin/add-team');
+
+        $view_data = [
+            //permet de recupérer les message d'erreurs du formulaire (s'il y en a)
+            'form_result' => Session::get(Session::FORM_RESULT)
+        ];
+
+        $view->render($view_data);
+    }
+
+    //méthode qui reçoit le formualaire
+  
 }
