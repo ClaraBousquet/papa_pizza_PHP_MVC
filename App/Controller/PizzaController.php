@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\AppRepoManager;
 use Core\View\View;
+use App\AppRepoManager;
+use Core\Session\Session;
 use Core\Controller\Controller;
 
 class PizzaController extends Controller
@@ -34,4 +35,18 @@ class PizzaController extends Controller
         $view = new View('home/pizza_detail');
         $view->render($view_data);
     }
+
+    //fonction pour crée une pizza personnalisée
+
+    //TODO: public function createPizzaPerso()
+    // {
+    //     $view_data = [
+    //         //permet de recupérer les message d'erreurs du formulaire (s'il y en a)
+    //         'form_result' => Session::get(Session::FORM_RESULT)
+    //     ];
+
+    //     $view = new View('user/add-pizza-perso');
+
+    //     $view->render($view_data);
+    // }
 }

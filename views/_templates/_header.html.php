@@ -71,9 +71,13 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                     <!--Si je suis en session on affiche mon compte  -->
                                     <?php if ($auth::isAuth()) : ?>
 
-                                        <a href="/account/<?= $user_id ?>">Mon compte
+                                        <a class="btn btn-danger dropdown-toggle" role="button" data-bs-toggle="dropdown" Dropdown link href="/account/<?= $user_id ?>">Mon compte
                                             <img src="/assets/images/icon/user.svg" alt="icone utilisateur">
                                         </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Mon compte</a></li>
+                                            <li><a class="dropdown-item" href="#">Mes pizzas</a></li>
+                                        </ul>
                                     <?php else : ?>
                                         <a href="/connexion">Se connecter
                                             <img src="/assets/images/icon/user.svg" alt="icone utilisateur">
@@ -83,7 +87,7 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
 
                                 <li class="custom-link-profil end-link">
                                     <?php if ($auth::isAuth() && $auth::isAdmin()) : ?>
-                                        <a  href="/admin/home">
+                                        <a href="/admin/home">
                                             <img class="custom-svg" src="/assets/images/icon/admin.svg" alt="icone back office">
                                         </a>
                                     <?php else : ?>
@@ -94,7 +98,7 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                 </li>
                                 <?php if ($auth::isAuth()) :  ?>
                                     <li class="custom-link-profil end-link">
-                                        <a  href="/logout">
+                                        <a href="/logout">
                                             <img class="logout custom-svg" src="/assets/images/icon/logout.svg" alt="icone logout">
                                         </a>
                                     </li>

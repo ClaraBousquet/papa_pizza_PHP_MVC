@@ -34,16 +34,38 @@ class PizzaIngredientRepository extends Repository
         $stmt = $this->pdo->prepare($query);
 
         //on vérifie si la requete s'est bien prépareée
-    if(!$stmt) return $array_result;
+        if (!$stmt) return $array_result;
 
-    //on execute la requete en bindant les parametres
-    $stmt->execute(['id' => $pizza_id]);
+        //on execute la requete en bindant les parametres
+        $stmt->execute(['id' => $pizza_id]);
 
-    //on récupère les résultats
-    while ($row_data = $stmt->fetch()) {
-        $array_result[] = new Ingredient($row_data);
-
+        //on récupère les résultats
+        while ($row_data = $stmt->fetch()) {
+            $array_result[] = new Ingredient($row_data);
+        }
+        return $array_result;
     }
-    return $array_result;
-}
+
+    //méthode pour créer une pizza_ingredient
+    public function insertPizzaIngredient(array $data): bool
+    {
+        //on crée la requete
+        $query = sprintf(
+            'INSERT INTO %s (`pizza_id`, `ingredient_id`, `unit_id`, `quantity`)
+        VALUES (:pizza_id, :ingredient_id, :unit_id, :quantity)',
+            $this->getTableName()
+        );
+        //on prepare la requete
+        $stmt = $this->pdo->prepare($query);
+        //on vérifie que la requete est bien préparée
+        if (!$stmt) return false;
+
+        //on exécute la requete en bindant les parametres
+        $stmt->execute($data);
+
+        //on vérifie que au moins une ligne a été enregistrée
+        return $stmt->rowCount() > 0;
+    }
+
+    //TODO: méthode pour insérer ingrédient du'ne pizza perso
 }

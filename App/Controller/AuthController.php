@@ -100,6 +100,7 @@ class AuthController extends Controller
         //si tout est OK on stock l'utilisateur en session et on le redirige vers la page d'accueil
         $user->password = '';
         Session::set(Session::USER, $user);
+        Session::remove(Session::FORM_RESULT);
         self::redirect('/');
     }
 
@@ -168,6 +169,7 @@ class AuthController extends Controller
         //on oublie pas de supprimer le mot de passe
         $user->password = '';
         Session::set(Session::USER, $user);
+        Session::remove(Session::FORM_RESULT);
         //on redirige sur la page d'accueil
         self::redirect('/');
     }
@@ -212,22 +214,18 @@ class AuthController extends Controller
                 'firstname' => $this->validInputs($data_form['firstname']),
                 'phone' => $this->validInputs($data_form['phone'])
             ];
-            $user = AppRepoManager::getRM()->getUserRepository()->addUser($data_user);
+            $user = AppRepoManager::getRM()->getUserRepository()->addTeam($data_user);
         }
 
         //sil y a des erreurs on les stocke en session
         //et on redirection vers la page d'inscription
         if ($form_result->hasErrors()) {
             Session::set(Session::FORM_RESULT, $form_result);
-            self::redirect('/inscription');
+            self::redirect('/admin/team/add');
         }
-
-        //si tout est OK on stock l'utilisateur en session et on le redirige vers la page d'accueil
-        //on oublie pas de supprimer le mot de passe
-        $user->password = '';
-        Session::set(Session::USER, $user);
-        //on redirige sur la page d'accueil
-        self::redirect('/');
+        //on redriige sur la liste des membres de l'équipe
+        Session::remove(Session::FORM_RESULT);
+        self::redirect('/admin/team/list');
     }
     //méthode qui permet de vérifier si un utilisateur est connecté
     public static function isAuth(): bool

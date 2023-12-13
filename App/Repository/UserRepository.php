@@ -61,6 +61,36 @@ class UserRepository extends Repository
         return $this->readById(User::class, $id);
     }
 
+    public function addTeam(array $data): ?User
+    {
+        $data_more = [
+            'is_admin' => 1,
+            'is_active' => 1,
+        ];
+        //on fusionne les deux tableaux
+        $data = array_merge($data, $data_more);
+
+        //on crée la requete
+        $query = sprintf(
+            'INSERT INTO %s (`email`, `password`, `lastname`, `firstname`, `phone`, `is_admin`, `is_active`)
+            VALUES (:email, :password,:lastname, :firstname, :phone, :is_admin, :is_active)',
+            $this->getTableName()
+        );
+
+        //on prépare la requete
+        $stmt = $this->pdo->prepare($query);
+        //ON VÉRIIFIE QUE LA REQUETE EST BIEN PREPAREE
+        // Vérification de la préparation de la requête
+        if (!$stmt) return null;
+        // on execute la requete
+        $stmt->execute($data);
+
+        //on récupère l'utilisateur qui vient d'étre ajouté
+        $id = $this->pdo->lastInsertId();
+        //on récupère l'utilisateur grace a cet id
+        return $this->readById(User::class, $id);
+    }
+
     //méthode qui récupère l'utilisateur grace à son id
     public function findUserById(int $id): ?User
     {

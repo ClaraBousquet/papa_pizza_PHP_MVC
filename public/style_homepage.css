@@ -71,15 +71,16 @@ body {
 /* ici on code la vue mobile */
 /* 1er media query <480px */
 
-header{
+header {
     position: sticky;
     top: 0;
     z-index: 3;
 }
+
 #topbar {
     display: flex;
     flex-direction: column;
-   
+
 }
 
 .line1 {
@@ -127,6 +128,10 @@ header{
 
 
 /* navbar */
+
+.btn-menu {
+    color: #9c3030;
+}
 
 .custom-nav {
     margin-top: 20px;
