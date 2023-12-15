@@ -44,6 +44,34 @@ class PizzaRepository extends Repository
 
         return $array_result;
     }
+
+    //TODO:méthode pour récupérer les pizzas personnalisées
+    // public function getPizzaPerso(): array
+    // {
+
+    //     //on déclare un tableau vide
+    //     $array_result = [];
+    //     //on déclare la requete SQL
+
+    //     $query = sprintf(
+    //         ''
+    //     );
+    //     //on peut directement executer la requete avec la methode query()
+    //     $stmt = $this->pdo->query($query);
+    //     //on vérifie si la requete s'est bien exécutée
+    //     if (!$stmt) return $array_result;
+
+    //     //On récupère les données de la table dans une boucle
+    //     while ($row_data = $stmt->fetch()) {
+    //         $array_result[] = new Pizza($row_data);
+    //     }
+
+
+    //     return $array_result;
+    // }
+
+
+    
     //totues les pizzas a vec infos
     public function getAllPizzasWithInfo(): array
     {
@@ -140,22 +168,24 @@ class PizzaRepository extends Repository
         return $this->getPizzaById($pizza_id);
     }
 
-    //méthode qui supprime une pizza
-    // public function deletePizza(int $pizza_id): bool
-    // {
-    //     //on crée la requete SQL
-    //     $query = sprintf(
-    //         'UPDATE %s SET is_active = 0 WHERE `id` = :id',
-    //         $this->getTableName()
-    //     );
+    //méthode pour supprimer une pizza
+      public function deletePizza(int $id): bool
+    {
+        //on crée la requete SQL
+        $query = sprintf(
+            'UPDATE %s SET is_active = 0 WHERE `id` = :id',
+            $this->getTableName()
+        );
 
-    //     //on prépare la requete
-    //     $stmt = $this->pdo->prepare($query);
+        //on prépare la requete
+        $stmt = $this->pdo->prepare($query);
 
-    //     //on vérifie que la requete est bien préparée
-    //     if (!$stmt) return false;
+        //on vérifie que la requete est bien préparée
+        if (!$stmt) return false;
 
-    //     //on execute la requete si la requete est passée on retourne true sinon false
-    //     return $stmt->execute(['id' => $pizza_id]);
-    // }
+        //on execute la requete si la requete est passée on retourne true sinon false
+        return $stmt->execute(['id' => $id]);
+    }
+
+    
 }

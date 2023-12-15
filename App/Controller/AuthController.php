@@ -248,4 +248,10 @@ class AuthController extends Controller
         //on redirige sur la page d'accueil
         self::redirect('/');
     }
+
+public static function getUserId()
+{
+    return Session::get(Session::USER)->id;
+}
+
 }

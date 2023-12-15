@@ -75,8 +75,10 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                             <img src="/assets/images/icon/user.svg" alt="icone utilisateur">
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Mon compte</a></li>
-                                            <li><a class="dropdown-item" href="#">Mes pizzas</a></li>
+                                            <li><a class="dropdown-item" href="/account/{id}">Mon compte 📃</a></li>
+                                            <li><a class="dropdown-item" href="/user/pizza/perso">Mes pizzas 🍕</a></li>
+                                            <li><a class="dropdown-item" href="/pizza-personnalisee">Je crée ma Pizza 🧑‍🍳</a></li>
+
                                         </ul>
                                     <?php else : ?>
                                         <a href="/connexion">Se connecter

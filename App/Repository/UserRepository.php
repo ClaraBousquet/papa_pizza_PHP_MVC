@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Model\User;
 use Core\Repository\Repository;
+use App\Controller\AuthController;
 
 class UserRepository extends Repository
 {
@@ -161,5 +162,62 @@ class UserRepository extends Repository
 
         //on execute la requete si la requete est passée on retourne true sinon false
         return $stmt->execute(['id' => $id]);
+    }
+
+
+    //TODO:
+    //fonction qui récupère toutes les informations de l'utilisateur connecté
+    public function getUserActifInfos(): array
+    {
+        //on déclare un tableau vide
+        $user_infos = [];
+        //on récupère l'id de l'utilisateur connecté
+        $user_id = AuthController::getUserId();
+
+        //on crée la requete sql pour récupérer les informations de l'utilisateur connecté
+        $query = sprintf(
+            'SELECT `email`, `password`, `lastname`, `firstname`, `address`, `zip_code`, `city`, `country`, `phone` FROM %s WHERE id = :id',
+            $this->getTableName()
+        );
+
+        //on prépare la requete
+        $stmt = $this->pdo->prepare($query);
+        //on vérifie que la requete est bien préparée
+        if (!$stmt) return false;
+        //on execute la requete en bindant le parametre
+        $stmt->execute(['id' => $user_id]);
+
+        //on return le tableau
+        while ($result = $stmt->fetch()) {
+            $user_infos[] = $result;
+        }
+
+        return $user_infos;
+    }
+
+    //TODO:
+    // Méthode qui met à jour la table user dans la base de données
+    public function updateUser(User $user): bool
+    {
+        // Préparer la requête SQL pour mettre à jour l'utilisateur
+        $sql = "UPDATE user SET email = :email, lastname = :lastname, firstname = :firstname, address = :address, zip_code = :zip_code, city = :city, phone = :phone WHERE id = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+        if (!$stmt) {
+            return false;
+        }
+
+        // Exécuter la requête avec les valeurs de l'utilisateur
+        return $stmt->execute([
+            'email' => $user->email,
+            'lastname' => $user->lastname,
+            'firstname' => $user->firstname,
+            'address' => $user->address,
+            'zip_code' => $user->zip_code,
+            'city' => $user->city,
+            'id' => $user->id,
+            'phone' => $user->phone,
+
+        ]);
     }
 }

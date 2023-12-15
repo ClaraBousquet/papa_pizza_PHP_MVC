@@ -84,6 +84,99 @@ allergene > div > span {
 }
 
 
+.container-pizza-perso{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-pizza-ingredients {
+   display: flex;
+   flex-direction: row;
+   align-items: start;
+   justify-content: center;
+}
+
+.container-pizza-perso-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-perso{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-container-perso
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+.pizzaperso{
+    width: 30%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.btn-perso{
+    align-items: center;
+    justify-content: center;
+}
+.test{
+    font-family: 'dancing', sans-serif;
+}
+
+.box-pizza-perso {
+    display: flex;
+    width: 40%;
+    align-items: start;
+    justify-content: start;
+}
+
+.box-perso-size{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+}
+
+.box-perso-name{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+    margin-top: 30px;
+}
+
+.name-perso{
+    font-size: 20px;
+    width: 30%;
+    margin-left: 20px;
+}
+
+.form-perso{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ingre-perso{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 @media screen and (min-width:768px){
     .container-pizza-detail{
         display: flex;

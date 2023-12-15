@@ -88,7 +88,9 @@ class App implements DatabaseConfigInterface
         //route pour "supprimer" un utilisateur
         $this->router->get('/admin/user/delete/{id}', [AdminController::class, 'deleteUser']);
         //route pour supprimer une pizza
-        // $this->router->get('/admin/pizza/delete/{id}', [AdminController::class, 'deletePizza']);
+        $this->router->get('/admin/pizza/delete/{id}', [AdminController::class, 'deletePizza']);
+        //route pour modifier une pizza
+       //TODO: débuguer ! $this->router->get('/admin/pizza/edit', [AdminController::class, 'editPizza']);
         //route pour ajouter un membre de l'&quipe
         $this->router->get('/admin/team/add', [AdminController::class, 'addTeam']);
         //route qui recevra les formulaires d'ajout d'un membre de l'équipe
@@ -97,9 +99,19 @@ class App implements DatabaseConfigInterface
         //route pour ajouter une pizza
         $this->router->get('/admin/pizza/add', [AdminController::class, 'addPizza']);
         //route pour ajouter une pizza personnalisée
-        //TODO:$this->router->get('/user/pizza/add', [PizzaController::class, 'addPizzaPerso']);
+        $this->router->get('/pizza-personnalisee', [AdminController::class, 'createPizza']);
+        //route qui réceptionne les données du formualire d'ajout d'une pizza personnalisée
+        //TODO: problème de route : 
+        //$this->router->post('/add-pizza-perso-form', [AdminController::class, 'addPizzaPersoForm']);
+        //route pour afficher ses pizzas crées
+        $this->router->get('/user/pizza/perso', [AdminController::class, 'pizzaPerso']);
         //route qui réceptionne les données du formulaire d'ajout d'une nouvelle pizza
         $this->router->post('/add-pizza-form', [AdminController::class, 'addPizzaForm']);
+        //route pour interface "mon compte"
+        $this->router->get('/user/account', [AdminController::class, 'account']);
+        //route qui récupère les données modifiées de l'interface mon compte
+        $this->router->post('/user/update', [UserController::class, 'userUpdate']);
+
     }
 
     //3: méthode qui va démarrer le router

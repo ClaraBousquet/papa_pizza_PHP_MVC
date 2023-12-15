@@ -43,7 +43,8 @@ use Core\Session\Session; ?>
                     <td class="footer-description">
 
                         <!-- on vérifrie que l'id de l'user en session soit différent de l'id de l'user -->
-                        <a onClick="return confirm('Voulez-vous supprimer ce membre ?')" class="button-delete" href="/admin/user/delete/<?= $pizza->id ?>"><i class="bi bi-trash"></i></a>
+                            <a onClick="return confirm('Voulez-vous supprimer cette pizza ?')" class="button-delete" href="/admin/pizza/delete/<?= $pizza->id ?>"><i class="bi bi-trash"></i></a>
+                            <a onClick="return confirm('Voulez-vous supprimer cette pizza ?')" class="button-delete" href="/admin/pizza/edit/<?= $pizza->id ?>"><i class="bi bi-pencil"></i></a>
 
                     </td>
                 </tr>
