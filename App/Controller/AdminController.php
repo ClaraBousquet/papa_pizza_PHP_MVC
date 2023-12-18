@@ -179,8 +179,8 @@ class AdminController extends Controller
 
 
 
-  
 
+    //méthode qui affiche la liste des pizzas personnalisées
     public function pizzaPerso()
     {
         //on s'assure que l'utilisateur est connecté
@@ -190,10 +190,11 @@ class AdminController extends Controller
         }
 
         //on récupère l'id de l'utilisateur connecté
-        $user_id=Session::get(Session::USER)->id;
+        $user_id = Session::get(Session::USER)->id;
         //on appelle la méthode qui affiche la liste des pizzas personnalisées
         $view_data = [
-            'custom_pizzas'=>AppRepoManager::getRm()->getPizzaRepository()->getPizzasCustom($user_id)
+            'pizzas' => AppRepoManager::getRm()->getPizzaRepository()->getPizzasCustom($user_id),
+            'AppRepoManager' => AppRepoManager::getRm()
         ];
 
         $view = new View('home/pizza_perso_list');

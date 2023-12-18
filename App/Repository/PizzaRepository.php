@@ -163,23 +163,25 @@ class PizzaRepository extends Repository
     }
 
 //méthode pour récupérer les pizzas créées par un utilisateur
-    public function getPizzasCustom(int $user_id): array
-    {
-        //on crée la requete
-        $query = sprintf(
-            'SELECT * FROM %s WHERE user_id=:user_id' & 'is_admin = 0',
-            $this->getTableName()
-        );
+public function getPizzasCustom(int $user_id): array 
 
-        //on prepare la requete
-        $stmt = $this->pdo->prepare($query);
-        //on vérifie que la requete est bien préparée
-        if (!$stmt) return null;
-        //on execute la requete en bindant les parametres
-        $stmt->execute(['user_id' => $user_id]);
-        //on retourne le tableau
-        return $stmt->fetchAll();
-    }
+{ 
+    // on crée la requete
+    $query = sprintf( 
+        "SELECT p.* FROM %s AS p  
+         INNER JOIN user AS u ON p.user_id = u.id  
+         WHERE p.user_id = :user_id AND u.is_admin = 0", 
+        $this->getTableName() // Assurez-vous que cela renvoie 'pizza' 
+    ); 
+    // on prépare la requête 
+    $stmt = $this->pdo->prepare($query); 
+    // Vérifiez que la requête est bien préparée 
+    if (!$stmt) return []; 
+    // on execute la requête en liant les paramètres 
+    $stmt->execute(['user_id' => $user_id]); 
+    // on reoturne le tableau des résultats 
+    return $stmt->fetchAll(); 
+} 
 
 
 
