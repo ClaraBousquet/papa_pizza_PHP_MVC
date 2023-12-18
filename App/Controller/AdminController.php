@@ -256,4 +256,3 @@ public function pizzaPerso()
 
 
 
-    //TODO: méthode qui supprime une pizza

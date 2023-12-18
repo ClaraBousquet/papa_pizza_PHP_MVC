@@ -260,7 +260,7 @@ CREATE TABLE `user` (
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +269,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin@admin.com','$2y$10$0qa4oevS9HPUopr0sL2LuORo7h2DUMzMiB8lCW.WJMBZ3tzKp6/Za','Yolo','Pizza','3 rue de la pizza','66000','Perpignan','France','0601020304',1,0),(2,'doe@doe.com','$2y$10$0qa4oevS9HPUopr0sL2LuORo7h2DUMzMiB8lCW.WJMBZ3tzKp6/Za','toto','toto',NULL,NULL,NULL,NULL,'7846563',0,1),(3,'toto@toto.com','$2y$10$kTqjy99FKmOCMDpy6qmNROg0NhVvEEn8OxKdioOs0ZMdPf03InYuO','toto','toto',NULL,NULL,NULL,NULL,'123456',0,1),(4,'touto@toto.com','$2y$10$XX1lRMpqFxBYodi/zboMLeUkxtTfTDeCUkJ6wfpVZx3aqOxCV1/eq','toto','toto',NULL,NULL,NULL,NULL,'123456',0,1),(5,'tututu@tutu.com','$2y$10$9iidHjv.g/Ppe5mJIGnG3Ojlh32GNJYpzG0Z3mj4EaFt3r.eMShHC','tutu','toto',NULL,NULL,NULL,NULL,'1534865',1,0),(6,'tuif@toto.com','$2y$10$mf7a3silnXI83597J34WY.eqZRv2DbALDFRIf9gVgLzPS/fXyOxvy','toto','toto',NULL,NULL,NULL,NULL,'45646',1,1),(7,'team@team.com','$2y$10$z5wOgK4kAZFuQh9075vvje6lZ7IpMpr8gZxD41KY7ykrghqUFz0EO','toto','ami',NULL,NULL,NULL,NULL,'546459163',1,1);
+INSERT INTO `user` VALUES (1,'admin@admin.com','$2y$10$0qa4oevS9HPUopr0sL2LuORo7h2DUMzMiB8lCW.WJMBZ3tzKp6/Za','Yolo','Pizza','3 rue de la pizza','66000','Perpignan','France','0601020304',1,0),(2,'doe@doe.com','$2y$10$0qa4oevS9HPUopr0sL2LuORo7h2DUMzMiB8lCW.WJMBZ3tzKp6/Za','toto','toto',NULL,NULL,NULL,NULL,'7846563',0,1),(3,'toto@toto.com','$2y$10$kTqjy99FKmOCMDpy6qmNROg0NhVvEEn8OxKdioOs0ZMdPf03InYuO','toto','toto',NULL,NULL,NULL,NULL,'123456',0,1),(4,'touto@toto.com','$2y$10$XX1lRMpqFxBYodi/zboMLeUkxtTfTDeCUkJ6wfpVZx3aqOxCV1/eq','toto','toto',NULL,NULL,NULL,NULL,'123456',0,1),(5,'tututu@tutu.com','$2y$10$9iidHjv.g/Ppe5mJIGnG3Ojlh32GNJYpzG0Z3mj4EaFt3r.eMShHC','tutu','toto',NULL,NULL,NULL,NULL,'1534865',1,0),(6,'tuif@toto.com','$2y$10$mf7a3silnXI83597J34WY.eqZRv2DbALDFRIf9gVgLzPS/fXyOxvy','toto','toto',NULL,NULL,NULL,NULL,'45646',1,1),(7,'team@team.com','$2y$10$z5wOgK4kAZFuQh9075vvje6lZ7IpMpr8gZxD41KY7ykrghqUFz0EO','toto','ami',NULL,NULL,NULL,NULL,'546459163',1,1),(8,'tutu@toto.com','$2y$10$hD9lPcmgEG7qFDc7QX5uieeDX.vASYjO6QvT0wZ8K69tcYYr/TY9m','tutu','toto',NULL,NULL,NULL,NULL,'41654163',0,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -282,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-15  7:50:24
+-- Dump completed on 2023-12-15 15:32:49

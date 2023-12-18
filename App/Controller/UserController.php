@@ -17,10 +17,8 @@ class UserController extends Controller
         if (!AuthController::isAuth()) self::redirect('/');
 
         $data_view = [
-            'users' => AppRepoManager::getRm()->getUserRepository()->getUserActifInfos(),
-            'form_result' => Session::get(Session::FORM_RESULT)
+            'users' => AppRepoManager::getRm()->getUserRepository()->findUserById(Session::get(Session::USER)->id)
         ];
-
         $view = new View('user/account');
 
         $view->render($data_view);
@@ -39,6 +37,7 @@ class UserController extends Controller
     //fonction qui récupère les données modifiées de "mon compte"
     public function userUpdate()
     {
+
         // on récupère l'utilisateur
         $user = AppRepoManager::getRm()->getUserRepository()->findUserById(Session::get(Session::USER)->id);
 

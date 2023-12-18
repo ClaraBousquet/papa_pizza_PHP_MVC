@@ -27,24 +27,28 @@ use Core\Session\Session; ?>
                 <tr>
                     <td class="footer-description"><?= $pizza->name ?></td>
                     <td class="footer-description">
-                        <img class="admin-img-pizza" src="/assets/images/pizza/<?= $pizza->image_path ?>" alt="<?= $pizza->name ?>">
+                        <span class="name" id="name"><img class="admin-img-pizza" src="/assets/images/pizza/<?= $pizza->image_path ?>" alt="<?= $pizza->name ?>"></span>
+                        <button type="button" onclick="rendreEditable('name')"><i class="bi bi-pencil btn-modif btn-acnt"></i></button>
+
                     </td>
 
                     <td class="footer-description">
                         <?php foreach ($pizza->prices as $price) : ?>
-                            <p><?= $price->size->label ?> : <?= number_format($price->price, 2, ',', '') ?>€</p>
+                            <span name="price" id="price"><?= $price->size->label ?> : <?= number_format($price->price, 2, ',', '') ?>€</span>
                         <?php endforeach ?>
+                            <button type="button" onclick="rendreEditable('price')"><i class="bi bi-pencil btn-modif btn-acnt"></i></button>
                     </td>
                     <td class="footer-description">
                         <?php foreach ($pizza->ingredients as $ingredient) : ?>
-                            <p> <?= $ingredient->label ?></p>
+                            <span class="ingredient" id="ingredient"> <?= $ingredient->label ?></span>
+
                         <?php endforeach ?>
+                            <button type="button" onclick="rendreEditable('ingredient')"><i class="bi bi-pencil btn-modif btn-acnt"></i></button>
                     </td>
                     <td class="footer-description">
 
                         <!-- on vérifrie que l'id de l'user en session soit différent de l'id de l'user -->
                             <a onClick="return confirm('Voulez-vous supprimer cette pizza ?')" class="button-delete" href="/admin/pizza/delete/<?= $pizza->id ?>"><i class="bi bi-trash"></i></a>
-                            <a onClick="return confirm('Voulez-vous supprimer cette pizza ?')" class="button-delete" href="/admin/pizza/edit/<?= $pizza->id ?>"><i class="bi bi-pencil"></i></a>
 
                     </td>
                 </tr>
@@ -52,3 +56,33 @@ use Core\Session\Session; ?>
         </tbody>
     </table>
 </div>
+
+
+<!-- javascript -->
+<script>
+  function rendreEditable(id) { 
+
+    var element = document.getElementById(id); 
+    if (element.tagName === "SPAN") { 
+        // Créer un nouvel élément input 
+        var inputElement = document.createElement("input"); 
+        // Copie du contenu du span dans l'input 
+        inputElement.value = element.textContent; 
+        // Récupérer le nom du span 
+        var spanName = element.getAttribute("name"); 
+        // attribuer-le nom à l'input 
+        if (spanName) { 
+            inputElement.setAttribute("name", spanName); 
+        } 
+        // Remplacez le span par l'input 
+        element.parentNode.replaceChild(inputElement, element); 
+        // Rendez l'input éditable 
+        inputElement.contentEditable = "true"; 
+        // Donnez-lui le focus 
+        inputElement.focus()
+    } else { 
+        element.readOnly = false; 
+        element.focus(); 
+    } 
+} 
+</script>

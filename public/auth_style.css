@@ -69,6 +69,7 @@
 .table-user {
     width: 80%;
     margin-top: 30px;
+    align-items: center;
 }
 
 .container-infos-user {
@@ -96,6 +97,11 @@
     display: flex;
 }
 
+.inptinpt{
+    margin-top: 10px;
+    display: flex;
+    padding-top: 10px;
+}
 
 
 .button-delete {
@@ -107,12 +113,19 @@
     cursor: pointer;
 }
 
-
+.account-style{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
 
 .button-delete:hover {
     background-color: rgba(225, 71, 78, 1);
     color: rgba(255, 255, 255, 1);
 }
+
+
 
 .admin-img-pizza {
     width: 150px;

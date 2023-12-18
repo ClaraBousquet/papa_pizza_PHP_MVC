@@ -101,8 +101,8 @@ class App implements DatabaseConfigInterface
         //route pour ajouter une pizza personnalisée
         $this->router->get('/pizza-personnalisee', [AdminController::class, 'createPizza']);
         //route qui réceptionne les données du formualire d'ajout d'une pizza personnalisée
-        //TODO: problème de route : 
-        //$this->router->post('/add-pizza-perso-form', [AdminController::class, 'addPizzaPersoForm']);
+   
+        $this->router->post('/add-pizza-perso-form', [AdminController::class, 'addPizzaPersoForm']);
         //route pour afficher ses pizzas crées
         $this->router->get('/user/pizza/perso', [AdminController::class, 'pizzaPerso']);
         //route qui réceptionne les données du formulaire d'ajout d'une nouvelle pizza
