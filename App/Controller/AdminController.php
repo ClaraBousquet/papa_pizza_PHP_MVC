@@ -132,14 +132,11 @@ class AdminController extends Controller
     //méthode qui retourne le formulaire d'ajout de pizza
     public function addPizza()
     {
-
         $view_data = [
             //permet de recupérer les message d'erreurs du formulaire (s'il y en a)
             'form_result' => Session::get(Session::FORM_RESULT)
         ];
-
         $view = new View('admin/add-pizza');
-
         $view->render($view_data);
     }
 
@@ -188,7 +185,6 @@ class AdminController extends Controller
             self::redirect('/connexion');
             return;
         }
-
         //on récupère l'id de l'utilisateur connecté
         $user_id = Session::get(Session::USER)->id;
         //on appelle la méthode qui affiche la liste des pizzas personnalisées
@@ -196,10 +192,10 @@ class AdminController extends Controller
             'pizzas' => AppRepoManager::getRm()->getPizzaRepository()->getPizzasCustom($user_id),
             'AppRepoManager' => AppRepoManager::getRm()
         ];
-
         $view = new View('home/pizza_perso_list');
         $view->render($view_data);
     }
+
 
     //méthode qui reçoit le formulaire d'ajout de pizza
     public function addPizzaPersoForm(ServerRequest $request)
