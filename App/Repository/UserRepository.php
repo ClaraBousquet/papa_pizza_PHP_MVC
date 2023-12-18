@@ -164,9 +164,6 @@ class UserRepository extends Repository
         return $stmt->execute(['id' => $id]);
     }
 
-
-    //TODO:
-    //fonction qui récupère toutes les informations de l'utilisateur connecté
     public function getUserActifInfos(): array
     {
         //on déclare un tableau vide
@@ -195,8 +192,7 @@ class UserRepository extends Repository
         return $user_infos;
     }
 
-    //TODO:
-    // Méthode qui met à jour la table user dans la base de données
+
     public function updateUser(User $user): bool
     {
         // Préparer la requête SQL pour mettre à jour l'utilisateur

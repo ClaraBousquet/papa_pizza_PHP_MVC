@@ -86,6 +86,11 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                         </a>
                                     <?php endif ?>
                                 </li>
+                                <li>
+                                    <a class="cart" href="#">
+                                            <img src="/assets/images/icon/cart.svg" alt="icone panier">
+                                        </a>
+                                </li>
 
                                 <li class="custom-link-profil end-link">
                                     <?php if ($auth::isAuth() && $auth::isAdmin()) : ?>
@@ -109,11 +114,8 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                         </nav>
                     </div>
                 </div>
-
             </div>
-
-
-
+            
             <!-- Navbar -->
 
         </header>

@@ -27,8 +27,8 @@ use Core\Session\Session; ?>
                 <tr>
                     <td class="footer-description"><?= $pizza->name ?></td>
                     <td class="footer-description">
-                        <span class="name" id="name"><img class="admin-img-pizza" src="/assets/images/pizza/<?= $pizza->image_path ?>" alt="<?= $pizza->name ?>"></span>
-                        <button type="button" onclick="rendreEditable('name')"><i class="bi bi-pencil btn-modif btn-acnt"></i></button>
+                        <img class="admin-img-pizza" src="/assets/images/pizza/<?= $pizza->image_path ?>" alt="<?= $pizza->name ?>">
+                        <button type="button" onclick="rendreEditable('n')"><i class="bi bi-pencil btn-modif btn-acnt"></i></button>
 
                     </td>
 
@@ -55,14 +55,16 @@ use Core\Session\Session; ?>
             <?php endforeach ?>
         </tbody>
     </table>
+
+    <button>Enregistrer les modifications</button>
 </div>
 
 
-<!-- javascript -->
 <script>
   function rendreEditable(id) { 
 
     var element = document.getElementById(id); 
+
     if (element.tagName === "SPAN") { 
         // Créer un nouvel élément input 
         var inputElement = document.createElement("input"); 

@@ -179,49 +179,109 @@ class AdminController extends Controller
 
 
 
-    //TODO:fonction qui affiche les pizzas déjà crée
+  
 
-public function pizzaPerso()
-{
-    $view = new View('home/pizza_perso_list');
-    $view->render();
-}
+    public function pizzaPerso()
+    {
+        //on s'assure que l'utilisateur est connecté
+        if (!AuthController::isAuth()) {
+            self::redirect('/connexion');
+            return;
+        }
+
+        //on récupère l'id de l'utilisateur connecté
+        $user_id=Session::get(Session::USER)->id;
+        //on appelle la méthode qui affiche la liste des pizzas personnalisées
+        $view_data = [
+            'custom_pizzas'=>AppRepoManager::getRm()->getPizzaRepository()->getPizzasCustom($user_id)
+        ];
+
+        $view = new View('home/pizza_perso_list');
+        $view->render($view_data);
+    }
 
     //méthode qui reçoit le formulaire d'ajout de pizza
     public function addPizzaPersoForm(ServerRequest $request)
     {
-        //je définis les variables de size_id, name et ingredients
-        $size_id = $_POST['size_id'] ?? null;
-        $name = $_POST['name'] ?? null;
-        $ingredients = $_POST['ingredients'] ?? null;
-        $totalPrice = 0;
-        $price = 0;
-        $ingredient = 0;
-        // Définir les prix de base en fonction de la taille
-        if ($size_id == 1) {
-            $price = 10;
-            $ingredientPrice = 1;
-        } elseif ($size_id == 2) {
-            $price = 11;
-        } elseif ($size_id == 3) {
-            $price = 12;
-        }
-
-        //($price + longueur du tableau ingrédient)*prix de l'ingrédient
-        // Calcul du prix total
-        $totalPrice = ($price + count($ingredients)) * $ingredientPrice;
-        echo "Prix de la pizza  : " . $totalPrice . "€";
         $post_data = $request->getParsedBody();
         $form_result = new FormResult();
+        //on crée des variables
+        $name = $post_data['name']; //nom de la pizza
+        $user_id = $post_data['user_id']; //id de l'utilisateur
+        $array_ingredients = $post_data['ingredients']; //tableau des ingredients
+        $size_id = $post_data['size_id']; //tableau des tailles
+        $form_result = new FormResult();
 
-        //on instancie une nouvelle pizza
-        $pizza = new Pizza();
 
-        //on instancie une nouvelle vue
-        $view = new View('admin/add-pizza');
-        $view->render();
+
+        if (empty($name) || empty($user_id) || empty($array_ingredients) || empty($size_id)) {
+            $form_result->addError(new FormError('Veuillez remplir tous les champs'));
+        } elseif (count($array_ingredients) < 1) {
+            $form_result->addError(new FormError('Veuillez ajouter au moins un ingredient'));
+        } elseif (count($array_ingredients) > 5) {
+            $form_result->addError(new FormError('Veuillez ajouter au plus 5 ingredients'));
+        } else {
+
+            $data_pizza = [
+                'name' => htmlspecialchars(trim($name)),
+                'user_id' => intval($user_id),
+                'is_active' => 1,
+            ];
+            $pizza = AppRepoManager::getRm()->getPizzaRepository()->insertPizzaCustom($data_pizza);
+
+            if (!$pizza) {
+                $form_result->addError(new FormError('Erreur lors de l\'insertion de la pizza'));
+            }
+
+            $pizza_id = $pizza->id;
+
+            foreach ($array_ingredients as $ingredient_id) {
+                //on crée un tableau de données
+                $data_pizza_ingredient = [
+                    'pizza_id' => intval($pizza_id),
+                    'ingredient_id' => intval($ingredient_id),
+                    'quantity' => 1,
+                    'unit_id' => 5
+                ];
+                //on appelle la méthode qui va insérer les ingrédients de la pizza
+                $pizza_ingredient = AppRepoManager::getRm()->getPizzaIngredientRepository()->insertPizzaIngredient($data_pizza_ingredient);
+                //on vérifie que l'insertion s'est bien passée
+                if (!$pizza_ingredient) {
+                    $form_result->addError(new FormError('Erreur lors de l\'insertion des ingrédients de la pizza'));
+                }
+            }
+
+            if ($size_id == 1) {
+                $total_price = 5 + count($array_ingredients) * 0.9;
+            } elseif ($size_id == 2) {
+                $total_price = 8 + count($array_ingredients) * 1.2;
+            } else {
+                $total_price = 10 + count($array_ingredients) * 1.5;
+            }
+
+            $data_price = [
+                'price' => $total_price,
+                'pizza_id' => $pizza_id,
+                'size_id' => $size_id
+            ];
+
+            $price = AppRepoManager::getRm()->getPriceRepository()->insertPrice($data_price);
+
+            if (!$price) {
+                $form_result->addError(new FormError('Erreur lors de l\'insertion du prix de la pizza'));
+            }
+        }
+        //si il y a des erreurs
+        if ($form_result->hasErrors()) {
+            //on stocke les erreurs dans la session
+            Session::set(Session::FORM_RESULT, $form_result);
+            //on redirige vers la page d'ajout de jouet
+            self::redirect('/pizza-personnalisee');
+        }
+        //sinon on redirige vers la page admin
+        Session::remove(Session::FORM_RESULT);
+        self::redirect('/user/pizza/perso');
     }
-
 
     //méthode qui affiche la vue de création/personnalisation de pizza
 
@@ -231,28 +291,111 @@ public function pizzaPerso()
         $view->render();
     }
 
+    //méthode qui reçoit le formulaire d'ajout de pizza
+    public function addPizzaForm(ServerRequest $request)
+    {
+        $post_data = $request->getParsedBody();
+        $file_data = $_FILES['image_path'];
+        $form_result = new FormResult();
+        //on crée des variables
+        $name = $post_data['name']; //nom de la pizza
+        $user_id = $post_data['user_id']; //id de l'utilisateur
+        $array_ingredients = $post_data['ingredients']; //tableau des ingredients
+        $array_size = $post_data['size_id']; //tableau des tailles
+        $array_price = $post_data['price']; //tableau des prix
+        $image_name = $file_data['name']; //nom de l'image
+        $tmp_path = $file_data['tmp_name']; //chemin temporaire de l'image
+        $public_path = 'public/assets/images/pizza/'; //chemin public de l'image
+        $form_result = new FormResult();
 
+        //condition pour restreindre les types de fichiers que l'on souhaite recevoir
+        if (
+            $file_data['type'] !== 'image/jpeg' &&
+            $file_data['type'] !== 'image/png' &&
+            $file_data['type'] !== 'image/jpg' &&
+            $file_data['type'] !== 'image/webp'
+        ) {
+            $form_result->addError(new FormError('Le format de l\'image n\'est pas valide'));
+        } else if (
+            //on vérifie que les autres champs sont remplis
+            empty($name) ||
+            empty($user_id) ||
+            empty($array_ingredients) ||
+            empty($array_size) ||
+            empty($array_price) ||
+            empty($image_name)
+        ) {
+            $form_result->addError(new FormError('Veuillez remplir tous les champs'));
+        } else {
 
+            //on redefinit un nom unique pour l'image
+            $filename = uniqid() . '_' . $image_name;
+            $slug = explode('.', strtolower(str_replace(' ', '-', $filename)))[0];
+            //le chemin de destination
+            $imgPathPublic = PATH_ROOT . $public_path . $filename;
+            //on reconstruit un tableau de données
+            $data_pizza = [
+                'name' => htmlspecialchars(trim($name)),
+                'image_path' => htmlspecialchars(trim($filename)),
+                'user_id' => intval($user_id),
+                'is_active' => 1,
+            ];
 
-
+            //on va déplacer le fichier tmp dans son dossier de destination dans une condition
+            if (move_uploaded_file($tmp_path, $imgPathPublic)) {
+                // appel du repository pour inserer dans la bdd
+                $pizza = AppRepoManager::getRm()->getPizzaRepository()->insertPizza($data_pizza);
+                //on vérifie que la pizza a bien été insérée
+                if (!$pizza) {
+                    $form_result->addError(new FormError('Erreur lors de l\'insertion de la pizza'));
+                } else {
+                    //on récupère l'id de la pizza
+                    $pizza_id = $pizza->id;
+                    //on va insérer les ingrédients de la pizza
+                    foreach ($array_ingredients as $ingredient_id) {
+                        //on crée un tableau de données
+                        $data_pizza_ingredient = [
+                            'pizza_id' => intval($pizza_id),
+                            'ingredient_id' => intval($ingredient_id),
+                            'quantity' => 1,
+                            'unit_id' => 5
+                        ];
+                        //on appelle la méthode qui va insérer les ingrédients de la pizza
+                        $pizza_ingredient = AppRepoManager::getRm()->getPizzaIngredientRepository()->insertPizzaIngredient($data_pizza_ingredient);
+                        //on vérifie que l'insertion s'est bien passée
+                        if (!$pizza_ingredient) {
+                            $form_result->addError(new FormError('Erreur lors de l\'insertion des ingrédients de la pizza'));
+                        }
+                    }
+                    //on va insérer les tailles de la pizza
+                    foreach ($array_size as $size_id) {
+                        //on crée un tableau de données
+                        $data_price = [
+                            'pizza_id' => intval($pizza_id),
+                            'size_id' => intval($size_id),
+                            'price' => floatval($array_price[$size_id - 1])
+                        ];
+                        //on appelle la méthode qui va insérer les tailles de la pizza
+                        $price = AppRepoManager::getRm()->getPriceRepository()->insertPrice($data_price);
+                        //on vérifie que l'insertion s'est bien passée
+                        if (!$price) {
+                            $form_result->addError(new FormError('Erreur lors de l\'insertion des tailles de la pizza'));
+                        }
+                    }
+                }
+            } else {
+                $form_result->addError(new FormError('Erreur lors de l\'upload de l\'image'));
+            }
+        }
+        //si il y a des erreurs
+        if ($form_result->hasErrors()) {
+            //on stocke les erreurs dans la session
+            Session::set(Session::FORM_RESULT, $form_result);
+            //on redirige vers la page d'ajout de jouet
+            self::redirect('/admin/pizza/add');
+        }
+        //sinon on redirige vers la page admin
+        Session::remove(Session::FORM_RESULT);
+        self::redirect('/admin/pizza/list');
+    }
 }
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-    
-
-
-
-
-

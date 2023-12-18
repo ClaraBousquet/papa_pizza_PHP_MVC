@@ -89,8 +89,6 @@ class App implements DatabaseConfigInterface
         $this->router->get('/admin/user/delete/{id}', [AdminController::class, 'deleteUser']);
         //route pour supprimer une pizza
         $this->router->get('/admin/pizza/delete/{id}', [AdminController::class, 'deletePizza']);
-        //route pour modifier une pizza
-       //TODO: débuguer ! $this->router->get('/admin/pizza/edit', [AdminController::class, 'editPizza']);
         //route pour ajouter un membre de l'&quipe
         $this->router->get('/admin/team/add', [AdminController::class, 'addTeam']);
         //route qui recevra les formulaires d'ajout d'un membre de l'équipe
@@ -101,7 +99,6 @@ class App implements DatabaseConfigInterface
         //route pour ajouter une pizza personnalisée
         $this->router->get('/pizza-personnalisee', [AdminController::class, 'createPizza']);
         //route qui réceptionne les données du formualire d'ajout d'une pizza personnalisée
-   
         $this->router->post('/add-pizza-perso-form', [AdminController::class, 'addPizzaPersoForm']);
         //route pour afficher ses pizzas crées
         $this->router->get('/user/pizza/perso', [AdminController::class, 'pizzaPerso']);

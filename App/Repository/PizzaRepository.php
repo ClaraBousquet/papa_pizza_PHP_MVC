@@ -45,30 +45,6 @@ class PizzaRepository extends Repository
         return $array_result;
     }
 
-    //TODO:méthode pour récupérer les pizzas personnalisées
-    // public function getPizzaPerso(): array
-    // {
-
-    //     //on déclare un tableau vide
-    //     $array_result = [];
-    //     //on déclare la requete SQL
-
-    //     $query = sprintf(
-    //         ''
-    //     );
-    //     //on peut directement executer la requete avec la methode query()
-    //     $stmt = $this->pdo->query($query);
-    //     //on vérifie si la requete s'est bien exécutée
-    //     if (!$stmt) return $array_result;
-
-    //     //On récupère les données de la table dans une boucle
-    //     while ($row_data = $stmt->fetch()) {
-    //         $array_result[] = new Pizza($row_data);
-    //     }
-
-
-    //     return $array_result;
-    // }
 
 
     
@@ -154,19 +130,58 @@ class PizzaRepository extends Repository
         );
         //on prepare la requete
         $stmt = $this->pdo->prepare($query);
-
         //on vérifie que la requete est bien préparée
         if(!$stmt) return null;
-
         //on execute la requete en bindant les parametres
         $stmt->execute($data);
-
         //on récupère l'id de la pizza fraichement crée
         $pizza_id = $this->pdo->lastInsertId();//return le dernier id qui vient detre inséré
-
         //on retourne la pizza
         return $this->getPizzaById($pizza_id);
     }
+
+
+    //méthode qui permet de créer une pizza par un user
+    public function insertPizzaCustom(array $data): ?Pizza
+    {
+        //on crée la requete
+        $query = sprintf(
+            'INSERT INTO %s (`name`, `is_active`, `user_id`)
+            VALUES(:name, :is_active, :user_id)',
+            $this->getTableName()
+        );
+        //on prepare la requete
+        $stmt = $this->pdo->prepare($query);
+        //on vérifie que la requete est bien préparée
+        if(!$stmt) return null;
+        //on execute la requete en bindant les parametres
+        $stmt->execute($data);
+        //on récupère l'id de la pizza fraichement crée
+        $pizza_id = $this->pdo->lastInsertId();//return le dernier id qui vient detre inséré
+        //on retourne la pizza
+        return $this->getPizzaById($pizza_id);
+    }
+
+//méthode pour récupérer les pizzas créées par un utilisateur
+    public function getPizzasCustom(int $user_id): array
+    {
+        //on crée la requete
+        $query = sprintf(
+            'SELECT * FROM %s WHERE user_id=:user_id' & 'is_admin = 0',
+            $this->getTableName()
+        );
+
+        //on prepare la requete
+        $stmt = $this->pdo->prepare($query);
+        //on vérifie que la requete est bien préparée
+        if (!$stmt) return null;
+        //on execute la requete en bindant les parametres
+        $stmt->execute(['user_id' => $user_id]);
+        //on retourne le tableau
+        return $stmt->fetchAll();
+    }
+
+
 
     //méthode pour supprimer une pizza
       public function deletePizza(int $id): bool

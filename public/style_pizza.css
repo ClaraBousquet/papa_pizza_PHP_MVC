@@ -135,6 +135,21 @@ allergene > div > span {
     font-family: 'dancing', sans-serif;
 }
 
+.cart{
+    display: flex;
+    margin: 10px;
+}
+
+.size{
+    display: flex;
+   width: 20%;
+
+}
+
+.price-display{
+    color: aliceblue;
+}
+
 .box-pizza-perso {
     display: flex;
     width: 40%;
