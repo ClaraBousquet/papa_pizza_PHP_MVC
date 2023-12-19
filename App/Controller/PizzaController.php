@@ -39,6 +39,4 @@ class PizzaController extends Controller
         $view->render($view_data);
     }
 
-    //méthode qui supprime une pizza
-
 }
