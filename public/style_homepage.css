@@ -137,6 +137,20 @@ header {
     margin-top: 20px;
 }
 
+
+.cart-badge {
+    position: absolute;
+    top: 0; 
+    right: 30px;
+    background-color: red;
+    color: white; 
+    border-radius: 20%; 
+    padding: 20px 50px; 
+    font-size: 0.8em; 
+    display: none;
+}
+
+
 .nav-list {
     width: 100%;
 
@@ -150,6 +164,7 @@ header {
 
 .nav-profil {
     margin-top: 20px;
+    position: relative;
 }
 
 .custom-ul-profil {

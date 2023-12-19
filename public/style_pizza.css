@@ -33,6 +33,22 @@
 
 }
 
+
+.badge {
+    position: absolute;
+    top: -10px; /* Ajustez en fonction de votre mise en page */
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+
 .sub-title-detail{
     margin-top: 25px;
 }
@@ -111,12 +127,28 @@ allergene > div > span {
     justify-content: center;
 }
 
+.btn-plus{
+    background-color: rgba(155, 49, 49, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-plus:hover{
+    background-color: rgba(225, 71, 78, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
 .img-container-perso
 {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 .pizzaperso{
     width: 30%;
@@ -145,6 +177,7 @@ allergene > div > span {
    width: 20%;
 
 }
+
 
 .price-display{
     color: aliceblue;

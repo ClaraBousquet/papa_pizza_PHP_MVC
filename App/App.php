@@ -108,6 +108,10 @@ class App implements DatabaseConfigInterface
         $this->router->get('/user/account', [AdminController::class, 'account']);
         //route qui récupère les données modifiées de l'interface mon compte
         $this->router->post('/user/update', [UserController::class, 'userUpdate']);
+        //route pour interface panier
+        $this->router->get('/user/cart', [UserController::class, 'cart']);
+        //route qui récupère formulaire bouton ajouté au panier
+        $this->router->post('/add-to-cart', [UserController::class, 'addToCart']);
 
     }
 

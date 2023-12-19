@@ -87,9 +87,10 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                     <?php endif ?>
                                 </li>
                                 <li>
-                                    <a class="cart" href="#">
-                                            <img src="/assets/images/icon/cart.svg" alt="icone panier">
-                                        </a>
+                                    <a href="/user/cart" class="cart">
+                                        <img src="/assets/images/icon/cart.svg" alt="icone panier">
+                                    </a>
+
                                 </li>
 
                                 <li class="custom-link-profil end-link">
@@ -98,8 +99,8 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                                             <img class="custom-svg" src="/assets/images/icon/admin.svg" alt="icone back office">
                                         </a>
                                     <?php else : ?>
-                                        <a href="#">
-                                            <img src="/assets/images/icon/cart.svg" alt="icone panier">
+                                        <a href="/">
+                                            <img id="cart-badge" src="/assets/images/icon/cart.svg" alt="icone panier">
                                         </a>
                                     <?php endif ?>
                                 </li>
@@ -115,7 +116,7 @@ if ($auth::isAuth()) $user_id = Session::get(Session::USER)->id;
                     </div>
                 </div>
             </div>
-            
+
             <!-- Navbar -->
 
         </header>

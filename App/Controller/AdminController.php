@@ -190,7 +190,6 @@ class AdminController extends Controller
         //on appelle la méthode qui affiche la liste des pizzas personnalisées
         $view_data = [
             'pizzas' => AppRepoManager::getRm()->getPizzaRepository()->getPizzasCustom($user_id),
-            'AppRepoManager' => AppRepoManager::getRm()
         ];
         $view = new View('home/pizza_perso_list');
         $view->render($view_data);
@@ -203,22 +202,22 @@ class AdminController extends Controller
         $post_data = $request->getParsedBody();
         $form_result = new FormResult();
         //on crée des variables
-        $name = $post_data['name']; //nom de la pizza
-        $user_id = $post_data['user_id']; //id de l'utilisateur
-        $array_ingredients = $post_data['ingredients']; //tableau des ingredients
-        $size_id = $post_data['size_id']; //tableau des tailles
+
         $form_result = new FormResult();
 
 
 
-        if (empty($name) || empty($user_id) || empty($array_ingredients) || empty($size_id)) {
+        if (empty($post_data['name']) || empty($post_data['user_id']) || empty($post_data['ingredients']) || empty($post_data['size_id'])) {
             $form_result->addError(new FormError('Veuillez remplir tous les champs'));
-        } elseif (count($array_ingredients) < 1) {
+        } elseif (count($post_data['ingredients']) < 1) {
             $form_result->addError(new FormError('Veuillez ajouter au moins un ingredient'));
-        } elseif (count($array_ingredients) > 5) {
+        } elseif (count($post_data['ingredients']) > 5) {
             $form_result->addError(new FormError('Veuillez ajouter au plus 5 ingredients'));
         } else {
-
+            $name = $post_data['name']; //nom de la pizza
+            $user_id = $post_data['user_id']; //id de l'utilisateur
+            $array_ingredients = $post_data['ingredients']; //tableau des ingredients
+            $size_id = $post_data['size_id']; //tableau des tailles
             $data_pizza = [
                 'name' => htmlspecialchars(trim($name)),
                 'user_id' => intval($user_id),
