@@ -83,50 +83,80 @@ class UserController extends Controller
         $view->render($view_data);
     }
 
-    //méthode qui ajoute au panier en récupérant le formualire d'ajout
-    public function addToCart(ServerRequest $request)
-    {
-        $form_result = new FormResult();
-        $post_data = $request->getParsedBody();
-        if (empty($post_data['user_id']) || empty($post_data['pizza_id']) || empty($post_data['price']) || empty($post_data['quantity'])) {
-            $form_result->addError(new FormError('Veuillez remplir tous les champs'));
-        } else {
-            $user_id = intval($post_data['user_id']);
-            $pizza_id = intval($post_data['pizza_id']);
-            $quantity = intval($post_data['quantity']);
-            $price = floatval($post_data['price'] * $quantity);
-            $order_number = uniqid();
-            $oder_date = date('Y-m-d');
-            $order_status = 'En cours';
-            $order_data = [
-                'user_id' => $user_id,
-                'order_number' => $order_number,
-                'date_order' => $oder_date,
-                'status' => $order_status
-            ];
-            $order_id = AppRepoManager::getRm()->getOrderRepository()->insertOrder($order_data);
-            if (!$order_id) {
-                $form_result->addError(new FormError('Une erreur est survenue lors de la création de commande'));
-            }
-            $order_row_data = [
-                'quantity' => $quantity,
-                'price' => $price,
-                'order_id' => $order_id,
-                'pizza_id' => $pizza_id
-            ];
-            $order_row_data = AppRepoManager::getRm()->getOrderRowRepository()->insertOrderRow($order_row_data);
-            if (!$order_row_data) {
-                $form_result->addError(new FormError('Une erreur est survenue lors de la création de la commande'));
-            }
+  public function addToCart(ServerRequest $request)
+{
+    // On instancie un nouvel objet FormResult pour gérer les résultats du formulaire
+    $form_result = new FormResult();
+
+    // On récupère les données POST de la requête
+    $post_data = $request->getParsedBody();
+
+    // On vérifie si les champs nécessaires (user_id, pizza_id, price, quantity) sont remplis
+    if (empty($post_data['user_id']) || empty($post_data['pizza_id']) || empty($post_data['price']) || empty($post_data['quantity'])) {
+        // on ajoute une erreur au résultat du formulaire si les champs sont vides
+        $form_result->addError(new FormError('Veuillez remplir tous les champs'));
+    } else {
+        // On convertit les valeurs reçues en types appropriés
+        $user_id = intval($post_data['user_id']);
+        $pizza_id = intval($post_data['pizza_id']);
+        $quantity = intval($post_data['quantity']);
+        // On calcule le prix total
+        $price = floatval($post_data['price'] * $quantity);
+
+        // On génère un numéro de commande unique
+        $order_number = uniqid();
+
+        // On définit la date de la commande
+        $oder_date = date('Y-m-d');
+
+        // On définit le statut initial de la commande
+        $order_status = 'En cours';
+
+        // On prépare les données de la commande pour l'insertion dans la base de données
+        $order_data = [
+            'user_id' => $user_id,
+            'order_number' => $order_number,
+            'date_order' => $oder_date,
+            'status' => $order_status
+        ];
+
+        // On insère la commande dans la base de données et on récupère l'ID de la commande
+        $order_id = AppRepoManager::getRm()->getOrderRepository()->insertOrder($order_data);
+
+        // Si l'insertion échoue, on ajoute une erreur au résultat du formulaire
+        if (!$order_id) {
+            $form_result->addError(new FormError('Une erreur est survenue lors de la création de commande'));
         }
-        if ($form_result->hasErrors()) {
-            //on stocke les erreurs dans la session
-            Session::set(Session::FORM_RESULT, $form_result);
-            //on redirige vers la page de commande
-            self::redirect("/pizza/$pizza_id");
+
+        // On prépare les données pour la ligne de commande
+        $order_row_data = [
+            'quantity' => $quantity,
+            'price' => $price,
+            'order_id' => $order_id,
+            'pizza_id' => $pizza_id
+        ];
+
+        // On insère la ligne de commande dans la base de données
+        $order_row_data = AppRepoManager::getRm()->getOrderRowRepository()->insertOrderRow($order_row_data);
+
+        // Si l'insertion échoue, on ajoute une erreur au résultat du formulaire
+        if (!$order_row_data) {
+            $form_result->addError(new FormError('Une erreur est survenue lors de la création de la commande'));
         }
-        //sinon on redirige vers la page de commande
+    }
+
+    // On vérifie si des erreurs ont été enregistrées dans le résultat du formulaire
+    if ($form_result->hasErrors()) {
+        // Si des erreurs existent, on les stocke dans la session
+        Session::set(Session::FORM_RESULT, $form_result);
+
+        // On redirige l'utilisateur vers la page de la pizza concernée
+        self::redirect("/pizza/$pizza_id");
+    } else {
+        // Si aucune erreur n'est présente, on supprime les éventuelles erreurs stockées et on redirige vers le panier de l'utilisateur
         Session::remove(Session::FORM_RESULT);
         self::redirect("/user/cart");
     }
 }
+
+
