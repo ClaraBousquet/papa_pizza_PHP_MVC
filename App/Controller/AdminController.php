@@ -206,6 +206,7 @@ class AdminController extends Controller
         $form_result = new FormResult();
 
 
+        // on verifie que tous les champs sont remplis
 
         if (empty($post_data['name']) || empty($post_data['user_id']) || empty($post_data['ingredients']) || empty($post_data['size_id'])) {
             $form_result->addError(new FormError('Veuillez remplir tous les champs'));
@@ -214,6 +215,7 @@ class AdminController extends Controller
         } elseif (count($post_data['ingredients']) > 5) {
             $form_result->addError(new FormError('Veuillez ajouter au plus 5 ingredients'));
         } else {
+            //on crée des variables
             $name = $post_data['name']; //nom de la pizza
             $user_id = $post_data['user_id']; //id de l'utilisateur
             $array_ingredients = $post_data['ingredients']; //tableau des ingredients
@@ -224,7 +226,8 @@ class AdminController extends Controller
                 'is_active' => 1,
             ];
             $pizza = AppRepoManager::getRm()->getPizzaRepository()->insertPizzaCustom($data_pizza);
-
+            
+             //on vérifie que l'insertion s'est bien passée
             if (!$pizza) {
                 $form_result->addError(new FormError('Erreur lors de l\'insertion de la pizza'));
             }
