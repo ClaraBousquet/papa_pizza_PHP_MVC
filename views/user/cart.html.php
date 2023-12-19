@@ -1,4 +1,6 @@
-
+<?php use App\Models\Order;
+use App\Models\OrderRow;
+ ?>
 <h1 class="title">Panier</h1>
 
 
@@ -9,12 +11,11 @@
         <p>Date de commande : <?= $order->date_order ?></p>
         <p>Statut : <?= $order->status ?></p>
 
-        <!--boucle pour parcourir les lignes de commandes -->
         <?php foreach ($order->order_row as $row): ?>
             <div class="order-row">
-                <p>Nom du produit : <?= $row->product_name ?></p>
-                <p>Quantité : <?= $row->quantity ?></p>
-                <p>Prix unitaire : <?= $row->unit_price ?></p>
+                <p>Nom du produit : <?= $order_row->product_name ?></p>
+                <p>Quantité : <?= $order_row->quantity ?></p>
+                <p>Prix unitaire : <?= $order_row->unit_price ?></p>
             </div>
         <?php endforeach; ?>
     </div>
