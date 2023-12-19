@@ -81,31 +81,36 @@ $user = AppRepoManager::getRm()->getUserRepository()->findUserById(Session::get(
     </table>
 </div>
 
+<!-- Javascript -->
+
 <script>
-  function rendreEditable(id) { 
-
-    var element = document.getElementById(id); 
-
-    if (element.tagName === "SPAN") { 
-        // Créer un nouvel élément input 
-        var inputElement = document.createElement("input"); 
-        // Copie du contenu du span dans l'input 
-        inputElement.value = element.textContent; 
-        // Récupérer le nom du span 
-        var spanName = element.getAttribute("name"); 
-        // attribuer-le nom à l'input 
-        if (spanName) { 
-            inputElement.setAttribute("name", spanName); 
-        } 
-        // Remplacez le span par l'input 
-        element.parentNode.replaceChild(inputElement, element); 
-        // Rendez l'input éditable 
-        inputElement.contentEditable = "true"; 
-        // Donnez-lui le focus 
-        inputElement.focus()
-    } else { 
-        element.readOnly = false; 
-        element.focus(); 
-    } 
-} 
+    // Fonction pour rendre un élément éditable
+    function rendreEditable(id) {
+        // On récupère l'élément par son ID
+        var element = document.getElementById(id);
+        // On vérifie si l'élément est un élément <span>
+        if (element.tagName === "SPAN") {
+            // Si l'élément est span, on crée un nouvel élément <input>
+            var inputElement = document.createElement("input");
+            // On copie le contenu de l'élément <span> dans le nouvel élément <input>
+            inputElement.value = element.textContent;
+            // On récupère l'attribut "name" de l'élément <span>(si il en a un)
+            var spanName = element.getAttribute("name");
+            // On attribut le "name" au nouvel élément <input>
+            if (spanName) {
+                inputElement.setAttribute("name", spanName);
+            }
+            // On peut maintenant remplacer l'élément <span> par le nouvel élément <input> dans le DOM
+            element.parentNode.replaceChild(inputElement, element);
+            // On rend le nouvel élément <input> éditable
+            inputElement.contentEditable = "true";
+            // On met le focus sur le nouvel élément <input> (permet à l'user d'écrire directement)
+            inputElement.focus();
+        } else {
+            // Si l'élément n'est pas un <span>, on retire le mode lecture seule pour le rendre éditable
+            element.readOnly = false;
+            // On met alors le focus sur cet élément
+            element.focus();
+        }
+    }
 </script>
