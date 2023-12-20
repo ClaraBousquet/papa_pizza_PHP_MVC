@@ -52,13 +52,24 @@ $user_id = Session::get(Session::USER)->id;
 </form>
            
 
+<!-- Javascript  -->
 <script>
+    // Fonction pour limiter le nombre de cases à cocher
     function limitCheckbox() {
+        // On définit  le nombre maximal de cases à cocher 
         const maxChecked = 5;
+       // console.log("Nombre max autorisé de cases cochées : ", maxChecked);
+        // On récupère tous les éléments du DOM avec la classe 'ingredient-checkbox'
         const checkboxes = document.querySelectorAll('.ingredient-checkbox');
+        // Calcul du nombre de cases actuellement cochées
         const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+        //console.log("Nombre actuel de cases cochées : ", checkedCount);
+        // Parcours de chaque checkbox
         checkboxes.forEach(cb => {
-            if (!cb.checked) cb.disabled = checkedCount >= maxChecked;
+            // Désactivation des cases non cochées si le nombre maximal est atteint
+            if (!cb.checked) {
+                cb.disabled = checkedCount >= maxChecked;
+            }
         });
     }
 </script>
